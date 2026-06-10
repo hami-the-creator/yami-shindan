@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="20%" r="110%">
+      <stop offset="0%" stop-color="#2a1f52"/>
+      <stop offset="45%" stop-color="#1a1430"/>
+      <stop offset="100%" stop-color="#0b0a12"/>
+    </radialGradient>
+    <radialGradient id="moon" cx="38%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#f4ead2"/>
+      <stop offset="55%" stop-color="#c9a86a"/>
+      <stop offset="100%" stop-color="#8a744d"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c9a86a" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#c9a86a" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#c9a86a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="keyglow" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#e9e4d8"/>
+      <stop offset="55%" stop-color="#c9a86a"/>
+      <stop offset="100%" stop-color="#9c4250"/>
+    </radialGradient>
+    <linearGradient id="titlegrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="30%" stop-color="#f0e6cf"/>
+      <stop offset="100%" stop-color="#c9a86a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- 星 -->
+  <g fill="#e9e4d8">
+    <circle cx="140" cy="110" r="2.6" opacity="0.6"/>
+    <circle cx="350" cy="70" r="2" opacity="0.45"/>
+    <circle cx="620" cy="120" r="2.4" opacity="0.5"/>
+    <circle cx="200" cy="520" r="2" opacity="0.4"/>
+    <circle cx="540" cy="560" r="2.4" opacity="0.5"/>
+    <circle cx="1080" cy="520" r="2.2" opacity="0.5"/>
+    <circle cx="1130" cy="120" r="2" opacity="0.45"/>
+  </g>
+
+  <!-- 右側:月と鍵穴 -->
+  <g transform="translate(940,315)">
+    <circle cx="0" cy="0" r="280" fill="url(#glow)"/>
+    <circle cx="0" cy="0" r="185" fill="url(#moon)"/>
+    <circle cx="76" cy="-44" r="166" fill="#141026"/>
+    <circle cx="68" cy="-24" r="46" fill="url(#keyglow)"/>
+    <path d="M 68 0 L 41 86 L 95 86 Z" fill="url(#keyglow)"/>
+    <circle cx="68" cy="-24" r="46" fill="none" stroke="#c9a86a" stroke-opacity="0.55" stroke-width="4"/>
+    <path d="M 68 0 L 41 86 L 95 86 Z" fill="none" stroke="#c9a86a" stroke-opacity="0.55" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 左側:テキスト -->
+  <g font-family="Shippori Mincho">
+    <text x="96" y="158" font-size="26" letter-spacing="14" fill="#8a744d" font-weight="500">深層心理診断</text>
+
+    <text x="92" y="268" font-size="76" letter-spacing="6" fill="url(#titlegrad)" font-weight="800">あなたが抱える</text>
+    <text x="92" y="376" font-size="96" letter-spacing="8" fill="url(#titlegrad)" font-weight="800">本当の闇</text>
+
+    <text x="96" y="468" font-size="30" letter-spacing="4" fill="#e9e4d8" font-weight="500">八つの問いが、心の奥底を照らし出す。</text>
+  </g>
+
+  <!-- 下部メタ情報 -->
+  <g font-family="Shippori Mincho" font-weight="500">
+    <rect x="96" y="508" width="540" height="56" rx="28" fill="none" stroke="#c9a86a" stroke-opacity="0.6" stroke-width="2"/>
+    <text x="366" y="545" font-size="26" letter-spacing="6" fill="#c9a86a" text-anchor="middle">全8問 ・ 約1分 ・ 結果は6タイプ</text>
+  </g>
+
+  <!-- 金の角飾り -->
+  <g stroke="#c9a86a" stroke-width="5" fill="none" opacity="0.9">
+    <path d="M 44 78 L 44 44 L 78 44"/>
+    <path d="M 1122 44 L 1156 44 L 1156 78"/>
+    <path d="M 1156 552 L 1156 586 L 1122 586"/>
+    <path d="M 78 586 L 44 586 L 44 552"/>
+  </g>
+</svg>
