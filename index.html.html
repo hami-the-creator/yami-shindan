@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深層心理、あなたが抱える本当の闇</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="深層心理、あなたが抱える本当の闇">
+<meta property="og:description" content="八つの問いが、心の奥底を照らし出す。全8問・約1分・結果は6タイプの深層心理診断。">
+<!-- ↓公開後、ogp.pngを置いた場所の実際のURLに書き換えてください -->
+<meta property="og:image" content="https://あなたのユーザー名.github.io/リポジトリ名/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0a12;
+    --violet:#1a1430;
+    --gold:#c9a86a;
+    --gold-dim:#8a744d;
+    --blood:#9c4250;
+    --bone:#e9e4d8;
+    --mist:#9b94a8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, #241a44 0%, var(--violet) 38%, var(--ink) 80%);
+    min-height:100vh;
+    color:var(--bone);
+    font-family:'Zen Kaku Gothic New',sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;
+    overflow-x:hidden;
+  }
+  /* 漂う霧 */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(156,66,80,.07), transparent 40%),
+      radial-gradient(circle at 80% 20%, rgba(201,168,106,.06), transparent 45%);
+  }
+  .app{width:100%;max-width:520px;position:relative;z-index:1;}
+
+  /* ===== 共通 ===== */
+  .serif{font-family:'Shippori Mincho',serif;}
+  .frame{
+    border:1px solid rgba(201,168,106,.35);
+    border-radius:4px;
+    padding:40px 28px;
+    position:relative;
+    background:rgba(11,10,18,.55);
+    backdrop-filter:blur(2px);
+  }
+  .frame::before,.frame::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border:1px solid var(--gold);
+  }
+  .frame::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .frame::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  .eyebrow{
+    letter-spacing:.42em;font-size:11px;color:var(--gold-dim);
+    text-align:center;text-transform:uppercase;margin-bottom:14px;
+  }
+  button{
+    font-family:'Zen Kaku Gothic New',sans-serif;
+    cursor:pointer;border:none;background:none;color:inherit;
+  }
+  .btn-main{
+    display:block;width:100%;margin-top:28px;
+    padding:15px;border:1px solid var(--gold);
+    color:var(--gold);letter-spacing:.3em;font-size:14px;
+    transition:background .3s,color .3s;
+    border-radius:2px;
+  }
+  .btn-main:hover{background:var(--gold);color:var(--ink);}
+  .btn-main:focus-visible,.choice:focus-visible{outline:2px solid var(--bone);outline-offset:3px;}
+
+  /* ===== タイトル ===== */
+  #screen-title h1{
+    font-family:'Shippori Mincho',serif;
+    font-weight:800;font-size:34px;line-height:1.55;
+    text-align:center;letter-spacing:.08em;
+    background:linear-gradient(180deg,#f0e6cf 30%, var(--gold) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{
+    text-align:center;color:var(--mist);font-size:13px;
+    margin-top:18px;line-height:2;letter-spacing:.12em;
+  }
+  .quiz-meta{
+    margin:22px auto 0;width:fit-content;
+    padding:9px 22px;border:1px solid rgba(201,168,106,.5);
+    border-radius:999px;font-size:11.5px;
+    letter-spacing:.22em;color:var(--gold);
+  }
+  .moon{
+    width:74px;height:74px;border-radius:50%;
+    margin:0 auto 26px;
+    background:radial-gradient(circle at 38% 35%, #f4ead2, #c9a86a 60%, #6e5a39);
+    box-shadow:0 0 36px rgba(201,168,106,.45), 0 0 90px rgba(201,168,106,.18);
+    animation:breathe 5s ease-in-out infinite;
+  }
+  @keyframes breathe{50%{box-shadow:0 0 50px rgba(201,168,106,.6),0 0 110px rgba(201,168,106,.25);}}
+
+  /* ===== 質問 ===== */
+  .phase{
+    display:flex;justify-content:center;gap:10px;margin-bottom:30px;
+  }
+  .phase span{
+    width:9px;height:9px;border-radius:50%;
+    border:1px solid var(--gold-dim);transition:all .4s;
+  }
+  .phase span.done{background:var(--gold);border-color:var(--gold);}
+  .phase span.now{border-color:var(--bone);transform:scale(1.35);}
+  .q-num{
+    font-family:'Shippori Mincho',serif;color:var(--gold-dim);
+    text-align:center;font-size:13px;letter-spacing:.35em;margin-bottom:14px;
+  }
+  .q-text{
+    font-family:'Shippori Mincho',serif;font-weight:700;
+    font-size:20px;line-height:1.9;text-align:center;
+    min-height:96px;display:flex;align-items:center;justify-content:center;
+  }
+  .choices{margin-top:26px;display:grid;gap:12px;}
+  .choice{
+    text-align:left;padding:15px 18px;font-size:14px;line-height:1.7;
+    border:1px solid rgba(155,148,168,.3);border-radius:3px;
+    color:var(--bone);background:rgba(26,20,48,.4);
+    transition:border-color .25s, background .25s, transform .15s;
+  }
+  .choice:hover{border-color:var(--gold);background:rgba(201,168,106,.08);transform:translateX(4px);}
+
+  .fade-in{animation:fadeIn .55s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+
+  /* ===== 読み解き中 ===== */
+  #screen-loading{text-align:center;padding:70px 20px;}
+  .candle{
+    font-size:44px;animation:flicker 1.6s infinite;display:inline-block;
+  }
+  @keyframes flicker{
+    0%,100%{opacity:1;transform:scale(1);}
+    45%{opacity:.65;transform:scale(.96) rotate(-2deg);}
+    70%{opacity:.85;transform:scale(1.02) rotate(1deg);}
+  }
+  .loading-text{
+    margin-top:24px;font-family:'Shippori Mincho',serif;
+    letter-spacing:.25em;color:var(--mist);font-size:14px;
+  }
+
+  /* ===== 結果 ===== */
+  .result-card{
+    animation:reveal 1.1s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes reveal{
+    from{opacity:0;transform:rotateY(70deg) scale(.92);}
+    to{opacity:1;transform:none;}
+  }
+  .result-label{
+    text-align:center;font-size:12px;letter-spacing:.4em;
+    color:var(--blood);margin-bottom:10px;
+  }
+  .result-name{
+    font-family:'Shippori Mincho',serif;font-weight:800;
+    font-size:32px;text-align:center;letter-spacing:.1em;line-height:1.5;
+    color:var(--gold);text-shadow:0 0 24px rgba(201,168,106,.35);
+  }
+  .result-kana{
+    text-align:center;color:var(--mist);font-size:11px;
+    letter-spacing:.5em;margin-top:8px;
+  }
+  .darkness-meter{margin:28px 0 6px;}
+  .meter-head{
+    display:flex;justify-content:space-between;
+    font-size:11px;letter-spacing:.2em;color:var(--mist);margin-bottom:8px;
+  }
+  .meter-head b{color:var(--blood);font-size:15px;font-family:'Shippori Mincho',serif;}
+  .meter-track{
+    height:6px;background:rgba(155,148,168,.18);border-radius:3px;overflow:hidden;
+  }
+  .meter-fill{
+    height:100%;width:0;border-radius:3px;
+    background:linear-gradient(90deg, var(--gold), var(--blood));
+    transition:width 1.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .result-body{font-size:14px;line-height:2.1;margin-top:22px;color:var(--bone);}
+  .result-section{margin-top:22px;padding-top:20px;border-top:1px dashed rgba(201,168,106,.25);}
+  .result-section h3{
+    font-family:'Shippori Mincho',serif;font-size:14px;
+    letter-spacing:.3em;color:var(--gold);margin-bottom:10px;
+  }
+  .result-section p{font-size:13.5px;line-height:2;color:var(--bone);}
+  .disclaimer{
+    margin-top:26px;text-align:center;font-size:10.5px;
+    color:var(--mist);letter-spacing:.1em;
+  }
+  .btn-sub{
+    display:block;width:100%;margin-top:12px;padding:13px;
+    border:1px solid rgba(155,148,168,.4);color:var(--mist);
+    letter-spacing:.25em;font-size:12.5px;border-radius:2px;
+    transition:color .3s,border-color .3s;
+  }
+  .btn-sub:hover{color:var(--bone);border-color:var(--bone);}
+  .copied{color:var(--gold) !important;border-color:var(--gold) !important;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+    .meter-fill{transition:none;}
+  }
+  @media (max-width:420px){
+    #screen-title h1{font-size:27px;}
+    .frame{padding:32px 20px;}
+    .result-name{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- タイトル -->
+  <section id="screen-title" class="frame fade-in">
+    <div class="moon"></div>
+    <p class="eyebrow">Shinso Shinri</p>
+    <h1>深層心理、<br>あなたが抱える<br>本当の闇</h1>
+    <p class="subtitle">八つの問いが、あなたの心の奥底に<br>沈むものを静かに照らし出す。</p>
+    <p class="quiz-meta">全8問 ・ 約1分 ・ 結果は6タイプ</p>
+    <button class="btn-main serif" onclick="startQuiz()">扉を開く</button>
+  </section>
+
+  <!-- 質問 -->
+  <section id="screen-quiz" class="frame" style="display:none">
+    <div class="phase" id="phase"></div>
+    <p class="q-num" id="qNum"></p>
+    <p class="q-text serif" id="qText"></p>
+    <div class="choices" id="choices"></div>
+  </section>
+
+  <!-- 読み解き中 -->
+  <section id="screen-loading" class="frame" style="display:none">
+    <span class="candle">🕯️</span>
+    <p class="loading-text" id="loadingText">あなたの深層を読み解いています</p>
+  </section>
+
+  <!-- 結果 -->
+  <section id="screen-result" class="frame result-card" style="display:none">
+    <p class="result-label">― あなたの闇 ―</p>
+    <h2 class="result-name" id="rName"></h2>
+    <p class="result-kana" id="rKana"></p>
+
+    <div class="darkness-meter">
+      <div class="meter-head"><span>闇の深度</span><b id="rPercent">0%</b></div>
+      <div class="meter-track"><div class="meter-fill" id="rMeter"></div></div>
+    </div>
+
+    <p class="result-body" id="rDesc"></p>
+
+    <div class="result-section">
+      <h3>闇が囁くとき</h3>
+      <p id="rShadow"></p>
+    </div>
+
+    <div class="result-section">
+      <h3>闇の裏にある光</h3>
+      <p id="rLight"></p>
+    </div>
+
+    <button class="btn-main serif" onclick="restart()">もう一度占う</button>
+    <button class="btn-sub" id="copyBtn" onclick="copyResult()">結果をコピーして共有する</button>
+    <p class="disclaimer">※ この診断はエンターテインメントです。心理学的な診断ではありません。</p>
+  </section>
+
+</div>
+
+<script>
+// ===== 闇のタイプ =====
+const TYPES = {
+  cage: {
+    name:"完璧主義の檻",
+    kana:"KANPEKI SHUGI NO ORI",
+    desc:"あなたの闇は「許せなさ」。他人にではなく、誰よりも自分自身に向けられた刃です。90点を取っても、失った10点だけが夜中に頭の中で再生される。あなたの心の奥には、決して満足することを許さない冷たい看守が住んでいます。",
+    shadow:"疲れているのに「まだ足りない」と手を止められないとき、ミスをした自分を必要以上に責め続けるとき、檻の扉に静かに鍵がかかります。",
+    light:"その檻は、裏返せば誰にも真似できない探求心と職人気質。完璧を求める目は、本物を見抜く目でもあります。鍵はあなた自身が持っていることを、忘れないで。"
+  },
+  thirst: {
+    name:"承認の渇き",
+    kana:"SHOUNIN NO KAWAKI",
+    desc:"あなたの闇は「渇き」。どれだけ褒められても、心の砂漠に水は溜まりません。誰かの「いいね」や評価を糧に動けるのは才能ですが、その源泉が他人の手にある限り、あなたの心は他人の反応ひとつで晴れたり曇ったりしてしまいます。",
+    shadow:"返信が来ないだけで自分の価値が揺らぐとき、誰かと比べて急に自分の歩みが色褪せて見えるとき、渇きは深くなります。",
+    light:"渇きを知る者は、他人の渇きにも敏感です。あなたの共感力と察する力は、その闇が育てたもの。水源を自分の内側に掘り当てたとき、あなたは誰よりも強くなる。"
+  },
+  throne: {
+    name:"静寂の玉座",
+    kana:"SEIJAKU NO GYOKUZA",
+    desc:"あなたの闇は「手綱を離せないこと」。表では穏やかに譲っているように見えて、心の中では常に盤面全体を見渡し、物事が自分の描いた筋書きから外れることを密かに恐れています。人に委ねることは、あなたにとって足場を手放すのと同じくらい怖いことなのです。",
+    shadow:"人に任せた仕事をこっそり確認し直すとき、予定外の展開に必要以上の苛立ちを覚えるとき、玉座の肘掛けを握る手に力がこもります。",
+    light:"その支配欲の正体は、誰よりも先に全体を見通せる戦略眼。手綱を「握る」のではなく「渡す相手を選ぶ」力に変えたとき、あなたは真の指揮者になります。"
+  },
+  mask: {
+    name:"孤高の仮面",
+    kana:"KOKOU NO KAMEN",
+    desc:"あなたの闇は「見せないこと」。弱音や本音を口にする寸前で、いつも喉の奥に押し戻してしまう。「大丈夫」「平気」という言葉は、あなたが世界との間に静かに築いた美しい壁です。誰も、その内側の部屋を知りません。",
+    shadow:"本当は助けてほしいのに「一人で大丈夫」と微笑むとき、悩みを打ち明けられる側にばかり回るとき、仮面は少しずつ顔に張り付いていきます。",
+    light:"仮面の下には、簡単に揺らがない自立心と、他人に重さを預けない優しさがあります。信頼できる一人にだけ仮面を外して見せる――それだけで、その闇は静かな強さに変わります。"
+  },
+  ember: {
+    name:"嫉妬の残り火",
+    kana:"SHITTO NO NOKORIBI",
+    desc:"あなたの闇は「燃え残った火」。誰かの成功を祝う笑顔の裏側で、胸の奥がチリッと焦げる瞬間がある。それを認めたくなくて、火を見なかったことにする。けれど残り火は、見ないふりをするほど静かに燻り続けます。",
+    shadow:"SNSを閉じた後に妙な疲労感が残るとき、「あの人は運が良かっただけ」と心の中で呟くとき、残り火に風が吹き込みます。",
+    light:"嫉妬とは、欲しいものの在り処を正確に指し示す羅針盤。あなたの火は、向きを変えれば誰よりも強い推進力になります。羨んだものは、あなたが本気で取りに行けるものです。"
+  },
+  swamp: {
+    name:"自己犠牲の沼",
+    kana:"JIKO GISEI NO NUMA",
+    desc:"あなたの闇は「自分を後回しにする癖」。頼まれると断れず、気づけば自分の時間も体力も他人に差し出している。その沼は優しさの形をしているので、自分が沈んでいることになかなか気づけません。あなたの献身の底には「断ったら嫌われる」という小さな恐れが眠っています。",
+    shadow:"本当は疲れているのに「いいよ」と即答してしまうとき、自分の予定より他人の都合を反射的に優先するとき、沼は一段深くなります。",
+    light:"あなたの闇は、裏返せば底なしの思いやり。「ノー」と言うことは冷たさではなく、長く優しくあり続けるための呼吸です。自分を満たした優しさは、誰のことも沈めません。"
+  }
+};
+
+// ===== 質問(各選択肢がタイプに加点)=====
+const QUESTIONS = [
+  {
+    q:"深夜、ふと目が覚めた。最初に頭に浮かぶのは?",
+    a:[
+      {t:"昼間の自分の失言やミス", s:{cage:2, mask:1}},
+      {t:"あの人は今ごろ何をしているだろう", s:{thirst:2, ember:1}},
+      {t:"明日の段取りと、起こりうるトラブル", s:{throne:2, cage:1}},
+      {t:"頼まれごとを断れなかった後悔", s:{swamp:2, mask:1}}
+    ]
+  },
+  {
+    q:"鏡をのぞくと、中の自分が見たことのない笑みを浮かべていた。その「もう一人のあなた」は、何と話しかけてきそう?",
+    a:[
+      {t:"「まだ足りないって、わかってるよね」", s:{cage:2}},
+      {t:"「本当は、見てほしいんでしょう」", s:{thirst:2}},
+      {t:"「全部、思い通りにしたいくせに」", s:{throne:2}},
+      {t:"「いつまで平気なふりを続けるの」", s:{mask:2}}
+    ]
+  },
+  {
+    q:"友人が、あなたがずっと欲しかったものを先に手に入れた。",
+    a:[
+      {t:"心から祝う。でも帰り道は少し静かになる", s:{ember:2, mask:1}},
+      {t:"祝いながら、自分の計画を頭の中で練り直す", s:{throne:1, cage:1, ember:1}},
+      {t:"「自分には何が欠けてたんだろう」と分析を始める", s:{cage:2, thirst:1}},
+      {t:"自分のことはさておき、全力でお祝いの準備をする", s:{swamp:2}}
+    ]
+  },
+  {
+    q:"「最近どう?」と聞かれたとき、あなたの口癖に近いのは?",
+    a:[
+      {t:"「まあまあかな」(本当のことは言わない)", s:{mask:2}},
+      {t:"「忙しくて!」(充実して見られたい)", s:{thirst:2, cage:1}},
+      {t:"「順調だよ」(計画通りに進めているから)", s:{throne:2}},
+      {t:"「私のことより、そっちはどう?」", s:{swamp:2, mask:1}}
+    ]
+  },
+  {
+    q:"あなたが一番恐れているのは?",
+    a:[
+      {t:"努力が「無駄だった」と判明する瞬間", s:{cage:2, ember:1}},
+      {t:"誰からも必要とされなくなること", s:{thirst:2, swamp:1}},
+      {t:"物事が自分の手の届かない所で決まること", s:{throne:2}},
+      {t:"弱った姿を人に見られること", s:{mask:2}}
+    ]
+  },
+  {
+    q:"古い洋館で、開かずの扉を見つけた。あなたは——",
+    a:[
+      {t:"開ける前に、構造と退路を確認する", s:{throne:2, cage:1}},
+      {t:"開けない。中に何があっても、一人で抱えることになるから", s:{mask:2, swamp:1}},
+      {t:"誰かと一緒なら開ける。一人では意味がない", s:{thirst:2}},
+      {t:"開ける。誰かがすでに見た景色なら、自分も見ないと気が済まない", s:{ember:2}}
+    ]
+  },
+  {
+    q:"あなたの「優しさ」の正体に、一番近いのは?",
+    a:[
+      {t:"嫌われたくない、という小さな保険", s:{swamp:2, thirst:1}},
+      {t:"場をコントロールするための、静かな手段", s:{throne:2}},
+      {t:"自分に課したルール。「優しくあるべき」だから", s:{cage:2}},
+      {t:"距離を保つための、丁寧なバリア", s:{mask:2}}
+    ]
+  },
+  {
+    q:"もし闇を一晩だけ手放せるなら、代わりに何を望む?",
+    a:[
+      {t:"何もしなくても許される、完全な休息", s:{cage:2, swamp:1}},
+      {t:"誰の目も気にせず、好きに振る舞える自由", s:{thirst:2, mask:1}},
+      {t:"すべてを忘れて、流れに身を任せる夜", s:{throne:2}},
+      {t:"妬みも焦りもなく、ただ自分だけを見る時間", s:{ember:2}}
+    ]
+  }
+];
+
+// ===== 状態 =====
+let current = 0;
+let scores = {};
+
+const $ = id => document.getElementById(id);
+const screens = ["screen-title","screen-quiz","screen-loading","screen-result"];
+function show(id){
+  screens.forEach(s => $(s).style.display = (s===id ? "block" : "none"));
+}
+
+function startQuiz(){
+  current = 0;
+  scores = {cage:0,thirst:0,throne:0,mask:0,ember:0,swamp:0};
+  show("screen-quiz");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  // 進行ドット
+  $("phase").innerHTML = QUESTIONS.map((_,i)=>{
+    const cls = i < current ? "done" : (i === current ? "now" : "");
+    return `<span class="${cls}"></span>`;
+  }).join("");
+  $("qNum").textContent = `第 ${["一","二","三","四","五","六","七","八"][current]} の問い`;
+  $("qText").textContent = q.q;
+
+  // 選択肢をシャッフルして表示
+  const shuffled = [...q.a].sort(()=>Math.random()-.5);
+  $("choices").innerHTML = "";
+  shuffled.forEach(c=>{
+    const b = document.createElement("button");
+    b.className = "choice fade-in";
+    b.textContent = c.t;
+    b.onclick = ()=> answer(c.s);
+    $("choices").appendChild(b);
+  });
+  $("screen-quiz").classList.remove("fade-in");
+  void $("screen-quiz").offsetWidth;
+  $("screen-quiz").classList.add("fade-in");
+}
+
+function answer(s){
+  for(const k in s) scores[k] += s[k];
+  current++;
+  if(current < QUESTIONS.length){
+    renderQuestion();
+  }else{
+    showLoading();
+  }
+}
+
+function showLoading(){
+  show("screen-loading");
+  const msgs = ["あなたの深層を読み解いています","心の奥底に降りています","闇の輪郭が見えてきました"];
+  let i = 0;
+  const iv = setInterval(()=>{
+    i++;
+    if(i < msgs.length){
+      $("loadingText").textContent = msgs[i];
+    }else{
+      clearInterval(iv);
+      showResult();
+    }
+  }, 1100);
+}
+
+let lastResult = null;
+
+function showResult(){
+  // 最高得点のタイプ(同点はランダム)
+  const max = Math.max(...Object.values(scores));
+  const tops = Object.keys(scores).filter(k=>scores[k]===max);
+  const key = tops[Math.floor(Math.random()*tops.length)];
+  const r = TYPES[key];
+  lastResult = r;
+
+  // 闇の深度:スコア比率から55〜98%を演出
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const ratio = total ? max/total : .5;
+  const depth = Math.min(98, Math.round(55 + ratio*70));
+  lastResult.depth = depth;
+
+  $("rName").textContent = r.name;
+  $("rKana").textContent = r.kana;
+  $("rDesc").textContent = r.desc;
+  $("rShadow").textContent = r.shadow;
+  $("rLight").textContent = r.light;
+  $("rPercent").textContent = "0%";
+  $("rMeter").style.width = "0";
+
+  show("screen-result");
+  $("screen-result").classList.remove("result-card");
+  void $("screen-result").offsetWidth;
+  $("screen-result").classList.add("result-card");
+
+  // メーターアニメーション
+  setTimeout(()=>{
+    $("rMeter").style.width = depth + "%";
+    let n = 0;
+    const iv = setInterval(()=>{
+      n += Math.ceil(depth/40);
+      if(n >= depth){ n = depth; clearInterval(iv); }
+      $("rPercent").textContent = n + "%";
+    }, 35);
+  }, 400);
+}
+
+function restart(){
+  show("screen-title");
+}
+
+function copyResult(){
+  if(!lastResult) return;
+  const text = `【深層心理診断】私が抱える本当の闇は「${lastResult.name}」(闇の深度 ${lastResult.depth}%)でした…🕯️ #深層心理診断`;
+  // クリップボードAPI(iframe対策のフォールバック付き)
+  const done = ()=>{
+    const btn = $("copyBtn");
+    btn.textContent = "コピーしました";
+    btn.classList.add("copied");
+    setTimeout(()=>{
+      btn.textContent = "結果をコピーして共有する";
+      btn.classList.remove("copied");
+    }, 1800);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text, done));
+  }else{
+    fallbackCopy(text, done);
+  }
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand("copy"); done(); }catch(e){}
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
